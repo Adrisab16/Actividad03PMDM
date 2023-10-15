@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Actividad02PMDM</string>
+    <string name="title">Calculadora Adrian</string>
+    <string name="BtnNum3">3</string>
+    <string name="BtnNum2">2</string>
+    <string name="BtnNum4">4</string>
+    <string name="BtnNum5">5</string>
+    <string name="BtnNum6">6</string>
+    <string name="BtnNum7">7</string>
+    <string name="BtnNum8">8</string>
+    <string name="BtnNum9">9</string>
+    <string name="BtnNum0">0</string>
+    <string name="BtnC">C</string>
+    <string name="BtnSum">+</string>
+    <string name="BtnRest">-</string>
+    <string name="BtnDiv">%</string>
+    <string name="BtnMult">x</string>
+    <string name="BtnEq">=</string>
+</resources>

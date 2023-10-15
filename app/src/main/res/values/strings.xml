@@ -13,7 +13,7 @@
     <string name="BtnC">C</string>
     <string name="BtnSum">+</string>
     <string name="BtnRest">-</string>
-    <string name="BtnDiv">%</string>
+    <string name="BtnDiv">/</string>
     <string name="BtnMult">x</string>
     <string name="BtnEq">=</string>
 </resources>

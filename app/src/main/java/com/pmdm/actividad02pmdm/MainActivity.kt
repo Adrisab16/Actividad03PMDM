@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         buttonrest.setOnClickListener {
             if (operator == "") {
                 operator = "-"
-                if (n1 == 0.toDouble()) {
+                if (n1 == 0.0) {
                     n1 = output.toDouble()
                     textView.text = output
                     output = " "

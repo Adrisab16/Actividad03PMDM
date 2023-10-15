@@ -12,11 +12,12 @@ import com.pmdm.actividad02pmdm.R.*
  * código, empezando con un @override del método @onCreate
  */
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_main)
-        val textView = findViewById<TextView>(id.mainbox)
+        val mainbox = findViewById<TextView>(id.mainbox)
+        val detailbox = findViewById<TextView>(id.detailbox)
 
         /**
          * A continuación, explicaré las variables que usaré
@@ -52,43 +53,43 @@ class MainActivity : AppCompatActivity() {
         val button1 = findViewById<Button>(id.buttonN1)
         button1.setOnClickListener{
             output+="1" // Se añade el valor indicado a la variable output
-            textView.text = output}// Se añade el valor a la visibilidad del TextView principal
+            mainbox.text = output}// Se añade el valor a la visibilidad del TextView principal
         val button2 = findViewById<Button>(id.buttonN2)
         button2.setOnClickListener{
             output+="2"
-            textView.text = output}
+            mainbox.text = output}
         val button3 = findViewById<Button>(id.buttonN3)
         button3.setOnClickListener {
             output += "3"
-            textView.text = output}
+            mainbox.text = output}
         val button4 = findViewById<Button>(id.buttonN4)
         button4.setOnClickListener{
             output+="4"
-            textView.text = output}
+            mainbox.text = output}
         val button5 = findViewById<Button>(id.buttonN5)
         button5.setOnClickListener{
             output+="5"
-            textView.text = output}
+            mainbox.text = output}
         val button6 = findViewById<Button>(id.buttonN6)
         button6.setOnClickListener{
             output+="6"
-            textView.text = output}
+            mainbox.text = output}
         val button7 = findViewById<Button>(id.buttonN7)
         button7.setOnClickListener{
             output+="7"
-            textView.text = output}
+            mainbox.text = output}
         val button8 = findViewById<Button>(id.buttonN8)
         button8.setOnClickListener {
             output += "8"
-            textView.text = output}
+            mainbox.text = output}
         val button9 = findViewById<Button>(id.buttonN9)
         button9.setOnClickListener{
             output+="9"
-            textView.text = output}
+            mainbox.text = output}
         val button0 = findViewById<Button>(id.buttonN0)
         button0.setOnClickListener{
             output+="0"
-            textView.text = output}
+            mainbox.text = output}
 
 
 
@@ -101,24 +102,24 @@ class MainActivity : AppCompatActivity() {
                 operator = "+"
                 if (n1 == 0.0) {
                     n1 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     output = ""
                 } else {
                     n2 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     calc = Calc(n1, n2, operator)
                     output = calc.operation(operator).toString()
-                    textView.text = output
+                    mainbox.text = output
                     n1 = output.toDouble()
                     n2 = 0.0
                     output = ""
                 }
             } else {
                 n2 = output.toDouble()
-                textView.text = output
+                mainbox.text = output
                 calc = Calc(n1, n2, operator)
                 output = calc.operation(operator).toString()
-                textView.text = output
+                mainbox.text = output
                 n1 = output.toDouble()
                 n2 = 0.0
                 output = ""
@@ -132,24 +133,24 @@ class MainActivity : AppCompatActivity() {
                 operator = "-"
                 if (n1 == 0.0) {
                     n1 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     output = " "
                 } else {
                     n2 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     calc = Calc(n1, n2, operator)
                     output = calc.operation(operator).toString()
-                    textView.text = output
+                    mainbox.text = output
                     n1 = output.toDouble()
                     n2 = 0.0
                     output = " "
                 }
             } else {
                 n2 = output.toDouble()
-                textView.text = output
+                mainbox.text = output
                 calc = Calc(n1, n2, operator)
                 output = calc.operation(operator).toString()
-                textView.text = output
+                mainbox.text = output
                 n1 = output.toDouble()
                 n2 = 0.0
                 output = " "
@@ -163,25 +164,27 @@ class MainActivity : AppCompatActivity() {
                 operator = "*"
                 if (n1 == 0.0) {
                     n1=output.toDouble()
-                    textView.text = output
-                    output=" "
+                    mainbox.text = output
+                    output=""
                 }
                 else{
                     n2 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     calc = Calc(n1,n2,operator)
                     output=calc.operation(operator).toString()
-                    textView.text = output
+                    mainbox.text = output
+                    detailbox.text = "$n1 $operator $n2"
                     n1 = output.toDouble()
                     n2 = 0.0
                     output=""
                 }
             }else{
                 n2 = output.toDouble()
-                textView.text = output
+                mainbox.text = output
                 calc = Calc(n1,n2,operator)
                 output=calc.operation(operator).toString()
-                textView.text = output
+                mainbox.text = output
+                detailbox.text = "$n1 $operator $n2"
                 n1 = output.toDouble()
                 n2 = 0.0
                 output=""
@@ -195,25 +198,25 @@ class MainActivity : AppCompatActivity() {
                 operator = "/"
                 if (n1 == 0.0) {
                     n1=output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     output=" "
                 }
                 else{
                     n2 = output.toDouble()
-                    textView.text = output
+                    mainbox.text = output
                     calc = Calc(n1,n2,operator)
                     output=calc.operation(operator).toString()
-                    textView.text = output
+                    mainbox.text = output
                     n1 = output.toDouble()
                     n2 = 0.0
                     output=""
                 }
             }else{
                 n2 = output.toDouble()
-                textView.text = output
+                mainbox.text = output
                 calc = Calc(n1,n2,operator)
                 output=calc.operation(operator).toString()
-                textView.text = output
+                mainbox.text = output
                 n1 = output.toDouble()
                 n2 = 0.0
                 output=""
@@ -230,7 +233,8 @@ class MainActivity : AppCompatActivity() {
             output = ""
             n1 = 0.0
             n2 = 0.0
-            textView.text = output
+            operator=""
+            mainbox.text = output
         }
         /**
          * Este botón nos servirá para obtener el resultado, al pulsar, se creará el objeto cálculo
@@ -241,10 +245,10 @@ class MainActivity : AppCompatActivity() {
         val buttoneq = findViewById<Button>(id.buttonOpEq)
         buttoneq.setOnClickListener{
             n2=output.toDouble()
-            textView.text = output
+            mainbox.text = output
             calc = Calc(n1,n2,operator)
             output = calc.operation(operator).toString()
-            textView.text = output
+            mainbox.text = output
             n1 = output.toDouble()
             n2 = 0.0
             output="0"

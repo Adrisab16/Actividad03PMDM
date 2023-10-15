@@ -16,4 +16,5 @@
     <string name="BtnDiv">/</string>
     <string name="BtnMult">x</string>
     <string name="BtnEq">=</string>
+    <string name="BtnNum1">1</string>
 </resources>

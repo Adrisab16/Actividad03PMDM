@@ -98,34 +98,16 @@ class MainActivity : AppCompatActivity() {
 
         val buttonsum = findViewById<Button>(id.buttonOpSum)
         buttonsum.setOnClickListener {
-
-            if (operator == "") {
+            if (operator.isEmpty()) {
                 operator = "+"
                 if (n1 == 0.0) {
                     n1 = output.toDouble()
-                    mainbox.text = output
-                    output = ""
-                } else {
-                    n2 = output.toDouble()
-                    mainbox.text = output
-                    calc = Calc(n1, n2)
-                    output = calc.operation(operator).toString()
-                    mainbox.text = output
-                    n1 = output.toDouble()
-                    n2 = 0.0
-                    output = ""
                 }
             } else {
-                n2 = output.toDouble()
-                mainbox.text = output
-                calc = Calc(n1, n2)
-                output = calc.operation(operator).toString()
-                mainbox.text = output
                 n1 = output.toDouble()
-                n2 = 0.0
-                output = ""
                 operator = "+"
             }
+            output = ""
         }
 
         /**
@@ -135,33 +117,16 @@ class MainActivity : AppCompatActivity() {
 
         val buttonrest = findViewById<Button>(id.buttonOpRest)
         buttonrest.setOnClickListener {
-            if (operator == "") {
+            if (operator.isEmpty()) {
                 operator = "-"
                 if (n1 == 0.0) {
                     n1 = output.toDouble()
-                    mainbox.text = output
-                    output = " "
-                } else {
-                    n2 = output.toDouble()
-                    mainbox.text = output
-                    calc = Calc(n1, n2)
-                    output = calc.operation(operator).toString()
-                    mainbox.text = output
-                    n1 = output.toDouble()
-                    n2 = 0.0
-                    output = " "
                 }
             } else {
-                n2 = output.toDouble()
-                mainbox.text = output
-                calc = Calc(n1, n2)
-                output = calc.operation(operator).toString()
-                mainbox.text = output
                 n1 = output.toDouble()
-                n2 = 0.0
-                output = " "
                 operator = "-"
             }
+            output = ""
         }
 
         /**
@@ -171,13 +136,12 @@ class MainActivity : AppCompatActivity() {
          */
         val buttonmult = findViewById<Button>(id.buttonOpMult)
 
-        fun doCalcMult(n2: Double) {
+        /*fun doCalcMult(n2: Double, n1: Double) {
             val calc = Calc(n1, n2)
             output = calc.operation(operator).toString()
             mainbox.text = output
-            detailbox.text = "$n1 $operator $n2"
             n1 = output.toDouble()
-        }
+        }*/
 
         buttonmult.setOnClickListener {
             if (operator.isEmpty()) {
@@ -187,7 +151,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 n1 = output.toDouble()
-                doCalcMult(n1)
                 operator = "*"
             }
             output = ""
@@ -196,34 +159,16 @@ class MainActivity : AppCompatActivity() {
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)
         buttondiv.setOnClickListener{
-            if(operator==""){
+            if (operator.isEmpty()) {
                 operator = "/"
                 if (n1 == 0.0) {
-                    n1=output.toDouble()
-                    mainbox.text = output
-                    output=" "
-                }
-                else{
-                    n2 = output.toDouble()
-                    mainbox.text = output
-                    calc = Calc(n1, n2)
-                    output=calc.operation(operator).toString()
-                    mainbox.text = output
                     n1 = output.toDouble()
-                    n2 = 0.0
-                    output=""
                 }
-            }else{
-                n2 = output.toDouble()
-                mainbox.text = output
-                calc = Calc(n1, n2)
-                output=calc.operation(operator).toString()
-                mainbox.text = output
+            } else {
                 n1 = output.toDouble()
-                n2 = 0.0
-                output=""
-                operator="/"
+                operator = "/"
             }
+            output = ""
         }
 
         /**
@@ -253,7 +198,8 @@ class MainActivity : AppCompatActivity() {
             mainbox.text = output
             n1 = output.toDouble()
             n2 = 0.0
-            output="0"
+            output=""
+            operator = ""
         }
     }
 }

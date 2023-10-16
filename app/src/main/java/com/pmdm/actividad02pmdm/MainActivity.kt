@@ -93,6 +93,8 @@ class MainActivity : AppCompatActivity() {
 
         /**
          * Botón punto:
+         *
+         * Simplemente añade un punto para operaciones con decimales
          */
 
         val buttonPoint = findViewById<Button>(id.buttonOpPoint)
@@ -108,20 +110,35 @@ class MainActivity : AppCompatActivity() {
          * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
          * del operator vacio, quiere decir que es una operación concatenada,
          * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * cambiaremos de simbolo a la variable operator.
+         *
+         * Luego, añadimos una condición para evitar errores, si el operator ya
+         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
+         * veces el mismo boton, no da errores, simplemente se queda como está.
+         *
+         * A continuación, añadimos una condición para evitar otro error, en
+         * este caso se trata de si el operator ya tiene un simbolo diferente
+         * al de este botón, al pulsar este boton se va a cambiar de simbolo
+         * al de este botón, así evitamos que si se pulsan dos botones de
+         * operación seguidos de un error.
+         *
+         * Al final vaciaremos el
          * output para poder dejar paso a la segunda parte de la operación.
          */
 
         val buttonsum = findViewById<Button>(id.buttonOpSum)
         buttonsum.setOnClickListener {
-            if (operator.isEmpty()) {
-                operator = "+"
-                if (n1 == 0.0) {
-                    n1 = output.toDouble()
+            when {
+                operator.isEmpty() -> {
+                    operator = "+"
+                    if (n1 == 0.0) {n1 = output.toDouble()}
                 }
-            } else {
-                n1 = output.toDouble()
-                operator = "+"
+                operator == "+" -> {operator = "+"}
+                operator.isNotEmpty() && operator != "+" -> {operator = "+"}
+                else -> {
+                    n1 = output.toDouble()
+                    operator = "+"
+                }
             }
             output = ""
         }
@@ -134,20 +151,35 @@ class MainActivity : AppCompatActivity() {
          * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
          * del operator vacio, quiere decir que es una operación concatenada,
          * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * cambiaremos de simbolo a la variable operator.
+         *
+         * Luego, añadimos una condición para evitar errores, si el operator ya
+         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
+         * veces el mismo boton, no da errores, simplemente se queda como está.
+         *
+         * A continuación, añadimos una condición para evitar otro error, en
+         * este caso se trata de si el operator ya tiene un simbolo diferente
+         * al de este botón, al pulsar este boton se va a cambiar de simbolo
+         * al de este botón, así evitamos que si se pulsan dos botones de
+         * operación seguidos de un error.
+         *
+         * Al final vaciaremos el
          * output para poder dejar paso a la segunda parte de la operación.
          */
 
         val buttonrest = findViewById<Button>(id.buttonOpRest)
         buttonrest.setOnClickListener {
-            if (operator.isEmpty()) {
-                operator = "-"
-                if (n1 == 0.0) {
-                    n1 = output.toDouble()
+            when {
+                operator.isEmpty() -> {
+                    operator = "-"
+                    if (n1 == 0.0) {n1 = output.toDouble()}
                 }
-            } else {
-                n1 = output.toDouble()
-                operator = "-"
+                operator == "-" -> {operator = "-"}
+                operator.isNotEmpty() && operator != "-" -> {operator = "-"}
+                else -> {
+                    n1 = output.toDouble()
+                    operator = "-"
+                }
             }
             output = ""
         }
@@ -160,27 +192,36 @@ class MainActivity : AppCompatActivity() {
          * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
          * del operator vacio, quiere decir que es una operación concatenada,
          * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * cambiaremos de simbolo a la variable operator.
+         *
+         * Luego, añadimos una condición para evitar errores, si el operator ya
+         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
+         * veces el mismo boton, no da errores, simplemente se queda como está.
+         *
+         * A continuación, añadimos una condición para evitar otro error, en
+         * este caso se trata de si el operator ya tiene un simbolo diferente
+         * al de este botón, al pulsar este boton se va a cambiar de simbolo
+         * al de este botón, así evitamos que si se pulsan dos botones de
+         * operación seguidos de un error.
+         *
+         * Al final vaciaremos el
          * output para poder dejar paso a la segunda parte de la operación.
          */
+
         val buttonmult = findViewById<Button>(id.buttonOpMult)
 
-        /*fun doCalcMult(n2: Double, n1: Double) {
-            val calc = Calc(n1, n2)
-            output = calc.operation(operator).toString()
-            mainbox.text = output
-            n1 = output.toDouble()
-        }*/
-
         buttonmult.setOnClickListener {
-            if (operator.isEmpty()) {
-                operator = "*"
-                if (n1 == 0.0) {
-                    n1 = output.toDouble()
+            when {
+                operator.isEmpty() -> {
+                    operator = "*"
+                    if (n1 == 0.0) {n1 = output.toDouble()}
                 }
-            } else {
-                n1 = output.toDouble()
-                operator = "*"
+                operator == "*" -> {operator = "*"}
+                operator.isNotEmpty() && operator != "*" -> {operator = "*"}
+                else -> {
+                    n1 = output.toDouble()
+                    operator = "*"
+                }
             }
             output = ""
         }
@@ -193,20 +234,35 @@ class MainActivity : AppCompatActivity() {
          * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
          * del operator vacio, quiere decir que es una operación concatenada,
          * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * cambiaremos de simbolo a la variable operator.
+         *
+         * Luego, añadimos una condición para evitar errores, si el operator ya
+         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
+         * veces el mismo boton, no da errores, simplemente se queda como está.
+         *
+         * A continuación, añadimos una condición para evitar otro error, en
+         * este caso se trata de si el operator ya tiene un simbolo diferente
+         * al de este botón, al pulsar este boton se va a cambiar de simbolo
+         * al de este botón, así evitamos que si se pulsan dos botones de
+         * operación seguidos de un error.
+         *
+         * Al final vaciaremos el
          * output para poder dejar paso a la segunda parte de la operación.
          */
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)
         buttondiv.setOnClickListener{
-            if (operator.isEmpty()) {
-                operator = "/"
-                if (n1 == 0.0) {
-                    n1 = output.toDouble()
+            when {
+                operator.isEmpty() -> {
+                    operator = "/"
+                    if (n1 == 0.0) {n1 = output.toDouble()}
                 }
-            } else {
-                n1 = output.toDouble()
-                operator = "/"
+                operator == "/" -> {operator = "/"}
+                operator.isNotEmpty() && operator != "/" -> {operator = "/"}
+                else -> {
+                    n1 = output.toDouble()
+                    operator = "/"
+                }
             }
             output = ""
         }

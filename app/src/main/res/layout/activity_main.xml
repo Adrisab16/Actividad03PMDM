@@ -232,14 +232,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonOpEq"
+        android:id="@+id/buttonOpPoint"
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:layout_marginTop="512dp"
-        android:text="@string/BtnEq"
+        android:text="@string/BtnOpPoint"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonOpEq"
+        android:layout_width="315dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="572dp"
+        android:text="@string/BtnEq"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

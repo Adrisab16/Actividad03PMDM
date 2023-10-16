@@ -92,6 +92,15 @@ class MainActivity : AppCompatActivity() {
             mainbox.text = output}
 
         /**
+         * Botón punto:
+         */
+
+        val buttonPoint = findViewById<Button>(id.buttonOpPoint)
+        buttonPoint.setOnClickListener{
+            output+="."
+            mainbox.text = output}
+
+        /**
          * Botón de suma:
          *
          */

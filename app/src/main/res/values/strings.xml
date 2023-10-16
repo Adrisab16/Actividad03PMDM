@@ -17,4 +17,5 @@
     <string name="BtnMult">x</string>
     <string name="BtnEq">=</string>
     <string name="BtnNum1">1</string>
+    <string name="BtnOpPoint">.</string>
 </resources>

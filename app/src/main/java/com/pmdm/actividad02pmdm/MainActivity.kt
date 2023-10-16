@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
             /**
              * En este botón realizaremos la operación suma.
              */
+
+            /**
+             * Si el simbolo está vacio, quiere decir que el número n1 esta
+             * completo, ya que se ha pulsado el boton
+             */
             if (operator == "") {
                 operator = "+"
                 if (n1 == 0.0) {

@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     n2 = output.toDouble()
                     mainbox.text = output
-                    calc = Calc(n1, n2, operator)
+                    calc = Calc(n1, n2)
                     output = calc.operation(operator).toString()
                     mainbox.text = output
                     n1 = output.toDouble()
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 n2 = output.toDouble()
                 mainbox.text = output
-                calc = Calc(n1, n2, operator)
+                calc = Calc(n1, n2)
                 output = calc.operation(operator).toString()
                 mainbox.text = output
                 n1 = output.toDouble()
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     n2 = output.toDouble()
                     mainbox.text = output
-                    calc = Calc(n1, n2, operator)
+                    calc = Calc(n1, n2)
                     output = calc.operation(operator).toString()
                     mainbox.text = output
                     n1 = output.toDouble()
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 n2 = output.toDouble()
                 mainbox.text = output
-                calc = Calc(n1, n2, operator)
+                calc = Calc(n1, n2)
                 output = calc.operation(operator).toString()
                 mainbox.text = output
                 n1 = output.toDouble()
@@ -163,39 +163,41 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Botón de mutiplicación:
+         *
+         *
+         */
         val buttonmult = findViewById<Button>(id.buttonOpMult)
-        buttonmult.setOnClickListener{
-            if (operator == ""){
+
+        fun doCalcMult(n2: Double) {
+            val calc = Calc(n1, n2)
+            output = calc.operation(operator).toString()
+            mainbox.text = output
+            detailbox.text = "$n1 $operator $n2"
+            n1 = output.toDouble()
+            operator = ""
+        }
+        buttonmult.setOnClickListener {
+            if (operator.isEmpty()) {
                 operator = "*"
                 if (n1 == 0.0) {
-                    n1=output.toDouble()
-                    mainbox.text = output
-                    output=""
-                }
-                else{
-                    n2 = output.toDouble()
-                    mainbox.text = output
-                    calc = Calc(n1,n2,operator)
-                    output=calc.operation(operator).toString()
-                    mainbox.text = output
-                    detailbox.text = "$n1 $operator $n2"
                     n1 = output.toDouble()
-                    n2 = 0.0
-                    output=""
                 }
-            }else{
-                n2 = output.toDouble()
-                mainbox.text = output
-                calc = Calc(n1,n2,operator)
-                output=calc.operation(operator).toString()
-                mainbox.text = output
-                detailbox.text = "$n1 $operator $n2"
-                n1 = output.toDouble()
-                n2 = 0.0
-                output=""
-                operator="*"
             }
+            else if (operator == "*"){
+                throw Exception("No se pueden poner dos simbolos")
+            }
+            else {
+                n2 = output.toDouble()
+                doCalcMult(n2)
+                operator = "*"
+            }
+            output = ""
         }
+
+
+
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)
         buttondiv.setOnClickListener{
@@ -209,7 +211,7 @@ class MainActivity : AppCompatActivity() {
                 else{
                     n2 = output.toDouble()
                     mainbox.text = output
-                    calc = Calc(n1,n2,operator)
+                    calc = Calc(n1, n2)
                     output=calc.operation(operator).toString()
                     mainbox.text = output
                     n1 = output.toDouble()
@@ -219,7 +221,7 @@ class MainActivity : AppCompatActivity() {
             }else{
                 n2 = output.toDouble()
                 mainbox.text = output
-                calc = Calc(n1,n2,operator)
+                calc = Calc(n1, n2)
                 output=calc.operation(operator).toString()
                 mainbox.text = output
                 n1 = output.toDouble()
@@ -251,7 +253,7 @@ class MainActivity : AppCompatActivity() {
         buttoneq.setOnClickListener{
             n2=output.toDouble()
             mainbox.text = output
-            calc = Calc(n1,n2,operator)
+            calc = Calc(n1, n2)
             output = calc.operation(operator).toString()
             mainbox.text = output
             n1 = output.toDouble()

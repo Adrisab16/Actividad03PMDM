@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
          * A continuación, explicaré las variables que usaré
          * para el funcionamiento de mi calculadora:
          *
-         * @param n1 es la varaible que contendra el primer número de la operación.
+         * @param n1 es la variable que contendra el primer número de la operación.
          *
          * @param n2 es la variable que contendrá el segundo número de la operación.
          *
@@ -91,18 +91,14 @@ class MainActivity : AppCompatActivity() {
             output+="0"
             mainbox.text = output}
 
-
+        /**
+         * Botón de suma:
+         *
+         */
 
         val buttonsum = findViewById<Button>(id.buttonOpSum)
         buttonsum.setOnClickListener {
-            /**
-             * En este botón realizaremos la operación suma.
-             */
 
-            /**
-             * Si el simbolo está vacio, quiere decir que el número n1 esta
-             * completo, ya que se ha pulsado el boton
-             */
             if (operator == "") {
                 operator = "+"
                 if (n1 == 0.0) {
@@ -131,6 +127,11 @@ class MainActivity : AppCompatActivity() {
                 operator = "+"
             }
         }
+
+        /**
+         * Botón de resta:
+         *
+         */
 
         val buttonrest = findViewById<Button>(id.buttonOpRest)
         buttonrest.setOnClickListener {
@@ -176,27 +177,21 @@ class MainActivity : AppCompatActivity() {
             mainbox.text = output
             detailbox.text = "$n1 $operator $n2"
             n1 = output.toDouble()
-            operator = ""
         }
+
         buttonmult.setOnClickListener {
             if (operator.isEmpty()) {
                 operator = "*"
                 if (n1 == 0.0) {
                     n1 = output.toDouble()
                 }
-            }
-            else if (operator == "*"){
-                throw Exception("No se pueden poner dos simbolos")
-            }
-            else {
-                n2 = output.toDouble()
-                doCalcMult(n2)
+            } else {
+                n1 = output.toDouble()
+                doCalcMult(n1)
                 operator = "*"
             }
             output = ""
         }
-
-
 
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)

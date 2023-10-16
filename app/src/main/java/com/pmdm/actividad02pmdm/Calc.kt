@@ -12,10 +12,10 @@ class Calc (val n1:Double, val n2:Double, val op:String){
          * que contenga la variable @op.
          */
         return when (op) {
-            "+" -> {(n1 + n2).toDouble()} // Operación suma
-            "-" -> {(n1 - n2).toDouble()} // Operación resta
-            "*" -> {(n1 * n2).toDouble()} // Operación Multiplicación
-            "/" -> {(n1 / n2).toDouble()} // Operación División
+            "+" -> {(n1 + n2)} // Operación suma
+            "-" -> {(n1 - n2)} // Operación resta
+            "*" -> {(n1 * n2)} // Operación Multiplicación
+            "/" -> {(n1 / n2)} // Operación División
             else -> 0.0
         }
     }

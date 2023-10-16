@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
          * @param output es la variable que contendrá el resultado de la operación, así
          * como la operación en sí.
          *
-         * @param operator variable que nos dará la operación a realizar.
+         * @param operator variable que nos dará la operación a realizar, es decir, el simbolo.
          *
          * @param calc es el objeto de la clase Calc en la que vamos a
          * obtener los datos para usar su método @operation.

@@ -103,6 +103,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * Botón de suma:
          *
+         * Si el operator está vacio pondremos el simbolo "+" para pasar a la
+         * segunda parte de la operacion, si además de estar vacio, el valor
+         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
+         * del operator vacio, quiere decir que es una operación concatenada,
+         * en la que n1 ya tendrá el valor de la anterior operación, solamente
+         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * output para poder dejar paso a la segunda parte de la operación.
          */
 
         val buttonsum = findViewById<Button>(id.buttonOpSum)
@@ -122,6 +129,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * Botón de resta:
          *
+         * Si el operator está vacio pondremos el simbolo "-" para pasar a la
+         * segunda parte de la operacion, si además de estar vacio, el valor
+         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
+         * del operator vacio, quiere decir que es una operación concatenada,
+         * en la que n1 ya tendrá el valor de la anterior operación, solamente
+         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * output para poder dejar paso a la segunda parte de la operación.
          */
 
         val buttonrest = findViewById<Button>(id.buttonOpRest)
@@ -141,7 +155,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * Botón de mutiplicación:
          *
-         *
+         * Si el operator está vacio pondremos el simbolo "*" para pasar a la
+         * segunda parte de la operacion, si además de estar vacio, el valor
+         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
+         * del operator vacio, quiere decir que es una operación concatenada,
+         * en la que n1 ya tendrá el valor de la anterior operación, solamente
+         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * output para poder dejar paso a la segunda parte de la operación.
          */
         val buttonmult = findViewById<Button>(id.buttonOpMult)
 
@@ -165,6 +185,17 @@ class MainActivity : AppCompatActivity() {
             output = ""
         }
 
+        /**
+         * Botón división:
+         *
+         * Si el operator está vacio pondremos el simbolo "/" para pasar a la
+         * segunda parte de la operacion, si además de estar vacio, el valor
+         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
+         * del operator vacio, quiere decir que es una operación concatenada,
+         * en la que n1 ya tendrá el valor de la anterior operación, solamente
+         * cambiaremos de simbolo a la variable operator. Al final vaciaremos el
+         * output para poder dejar paso a la segunda parte de la operación.
+         */
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)
         buttondiv.setOnClickListener{
@@ -183,6 +214,10 @@ class MainActivity : AppCompatActivity() {
         /**
          * A continuación, tenemos el botón C, donde podremos
          * borrar lo que tengamos escrito hasta ahora.
+         * Simplemente devolvemos los valores a como estaban
+         * al principio del programa y lo mostraremos por pantalla,
+         * el resultado es que quedará vacio.
+         *
          */
         val buttonC = findViewById<Button>(id.buttonC)
         buttonC.setOnClickListener{
@@ -193,8 +228,11 @@ class MainActivity : AppCompatActivity() {
             mainbox.text = output
         }
         /**
-         * Este botón nos servirá para obtener el resultado, al pulsar, se creará el objeto cálculo
-         * con los valores de las variables n1, n2 y operator y procederemos a llamar al método
+         * Botón Equal:
+         *
+         * Este botón nos servirá para obtener el resultado de la operación,
+         * al pulsar, se creará el objeto cálculo con los valores de las
+         * variables n1, n2 y operator y procederemos a llamar al método
          * operation de la clase Calc.
          * Para más información sobre la clase Calc, @see Calc
          */

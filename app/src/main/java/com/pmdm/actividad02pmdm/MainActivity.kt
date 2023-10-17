@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttonsum = findViewById<Button>(id.buttonOpSum)
         buttonsum.setOnClickListener {
+            mainbox.text = "+"
             when {
                 operator.isEmpty() -> {
                     operator = "+"
@@ -172,6 +173,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttonrest = findViewById<Button>(id.buttonOpRest)
         buttonrest.setOnClickListener {
+            mainbox.text = "-"
             when {
                 operator.isEmpty() -> {
                     operator = "-"
@@ -214,6 +216,7 @@ class MainActivity : AppCompatActivity() {
         val buttonmult = findViewById<Button>(id.buttonOpMult)
 
         buttonmult.setOnClickListener {
+            mainbox.text = "*"
             when {
                 operator.isEmpty() -> {
                     operator = "*"
@@ -255,6 +258,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttondiv = findViewById<Button>(id.buttonOpDiv)
         buttondiv.setOnClickListener{
+            mainbox.text = "/"
             when {
                 operator.isEmpty() -> {
                     operator = "/"
@@ -271,6 +275,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
+         *
          * A continuación, tenemos el botón C, donde podremos
          * borrar lo que tengamos escrito hasta ahora.
          * Simplemente devolvemos los valores a como estaban
@@ -278,6 +283,7 @@ class MainActivity : AppCompatActivity() {
          * el resultado es que quedará vacio.
          *
          */
+
         val buttonC = findViewById<Button>(id.buttonC)
         buttonC.setBackgroundColor(Color.parseColor("#FF0000"))
         buttonC.setOnClickListener{
@@ -286,8 +292,11 @@ class MainActivity : AppCompatActivity() {
             n2 = 0.0
             operator=""
             mainbox.text = output
+            detailbox.text = output
         }
+
         /**
+         *
          * Botón Equal:
          *
          * Este botón nos servirá para obtener el resultado de la operación,
@@ -295,27 +304,53 @@ class MainActivity : AppCompatActivity() {
          * variables n1, n2 y operator y procederemos a llamar al método
          * operation de la clase Calc.
          * Para más información sobre la clase Calc, @see Calc
+         *
          */
+
         val buttoneq = findViewById<Button>(id.buttonOpEq)
         // Para cambiar el color a verde
         buttoneq.setBackgroundColor(Color.parseColor("#00FF00"))
         buttoneq.setOnClickListener{
             n2 = output.toDouble()
-            if (n1 != 0.0 && n2 != 0.0 && operator.isNotEmpty()) {
+            mainbox.text = output
+            calc = Calc(n1, n2)
+            output = calc.operation(operator).toString()
+            // Mostramos el resultado en la interfaz de usuario
+            mainbox.text = output
+            detailbox.text = "$n1 $operator $n2 = $output"
+            // Reiniciamos las variables
+            n1 = output.toDouble()
+            n2 = 0.0
+            output = ""
+            operator = ""
+        }
+
+
+        /**
+         * Botón CE:
+         *
+         * Con este botón podremos ir borrando uno a uno los caracteres que
+         * añadamos a la calculadora, permitiendo rectificar en la operación
+         * en caso de que nos equivoquemos
+         *
+         * Comenzaremos verificando si la variable "output" (donde se muestra
+         * el número actual en la pantalla) no está vacía, en caso de que no lo
+         * esté, significará que podemos empezar a borrar caracteres de la cadena
+         * uno a uno.
+         *
+         * Para conseguir que solo se borre de uno en uno y no toda la cadena entera,
+         * podemos usar un "substring", con el que podremos tomar una subcadena que
+         * excluya el último carácter (output.length - 1).
+         *
+         */
+
+        val buttonCE = findViewById<Button>(id.buttonOpCE)
+        // Para cambiar el color a amarillo
+        buttonCE.setBackgroundColor(Color.parseColor("#FFA500"))
+        buttonCE.setOnClickListener {
+            if (output.isNotEmpty()) {
+                output = output.substring(0, output.length - 1)
                 mainbox.text = output
-                calc = Calc(n1, n2)
-                output = calc.operation(operator).toString()
-                // Mostramos el resultado en la interfaz de usuario
-                mainbox.text = output
-                detailbox.text = "$n1 $operator $n2 = $output"
-                // Reiniciamos las variables
-                n1 = output.toDouble()
-                n2 = 0.0
-                output = ""
-                operator = ""
-            } else {
-                Toast.makeText(this, "Debe ingresar 2 números y una operación " +
-                        "para calcular un resultado", Toast.LENGTH_SHORT).show()
             }
         }
     }

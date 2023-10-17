@@ -18,4 +18,5 @@
     <string name="BtnEq">=</string>
     <string name="BtnNum1">1</string>
     <string name="BtnOpPoint">.</string>
+    <string name="BtnOpCE">CE</string>
 </resources>

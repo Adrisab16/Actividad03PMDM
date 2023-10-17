@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         var n1 = 0.0
         var n2: Double
+        var n2Bool = false
         var output = ""
         var operator= ""
         var calc: Calc
@@ -300,21 +301,23 @@ class MainActivity : AppCompatActivity() {
         // Para cambiar el color a verde
         buttoneq.setBackgroundColor(Color.parseColor("#00FF00"))
         buttoneq.setOnClickListener{
-
+            n2Bool = true
             n2 = output.toDouble()
             if (n1 != 0.0 && n2 != 0.0 && operator.isNotEmpty()) {
                 mainbox.text = output
                 calc = Calc(n1, n2)
                 output = calc.operation(operator).toString()
+                // Mostramos el resultado en la interfaz de usuario
                 mainbox.text = output
                 detailbox.text = "$n1 $operator $n2 = $output"
+                // Reiniciamos las variables
                 n1 = output.toDouble()
                 n2 = 0.0
                 output = ""
                 operator = ""
             } else {
-                // Mostrar un mensaje Toast indicando que se necesitan 2 números y una operación
-                Toast.makeText(this, "Debe ingresar 2 números y una operación para calcular un resultado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Debe ingresar 2 números y una operación " +
+                        "para calcular un resultado", Toast.LENGTH_SHORT).show()
             }
         }
     }

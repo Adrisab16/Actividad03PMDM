@@ -1,357 +1,262 @@
 package com.pmdm.actividad02pmdm
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.pmdm.actividad02pmdm.R.*
+import java.text.DecimalFormat
 
-/**
- * En el @MainActivity tendremos el grueso de nuestro
- * código, empezando con un @override del método @onCreate
- */
+@Suppress("SpellCheckingInspection")
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId", "SetTextI18n")
+
+    private lateinit var txtPantalla : TextView
+    private lateinit var txtDetalle : TextView
+
+    private lateinit var btnNum : ArrayList<Button>
+    private lateinit var btnOper : ArrayList<Button>
+
+    private lateinit var btnCE : Button
+    private lateinit var btnResult : Button
+    private lateinit var btnBorrar: Button
+
+    private lateinit var calc : Calculo
+    private val df = DecimalFormat("#.##")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_main)
-        val mainbox = findViewById<TextView>(id.mainbox)
-        val detailbox = findViewById<TextView>(id.detailbox)
+        setContentView(R.layout.activity_main)
 
-        /**
-         * A continuación, explicaré las variables que usaré
-         * para el funcionamiento de mi calculadora:
-         *
-         * @param n1 es la variable que contendra el primer número de la operación.
-         *
-         * @param n2 es la variable que contendrá el segundo número de la operación.
-         *
-         * @param output es la variable que contendrá el resultado de la operación, así
-         * como la operación en sí.
-         *
-         * @param operator variable que nos dará la operación a realizar, es decir, el simbolo.
-         *
-         * @param calc es el objeto de la clase Calc en la que vamos a
-         * obtener los datos para usar su método @operation.
-         *
-         * @see Calc para obtener una información más
-         * detallada sobre la realización de los calculos.
-         */
+        // Creo mi objeto de tipo Calculo.
+        calc = Calculo()
 
-        // Variables Calculadora:
+        //Inicializamos las variables que corresponderán a cada componente y les asignamos una función al evento que se programa de cada uno.
+        initComponents()
+        initListeners()
+    }
 
-        var n1 = 0.0
-        var n2: Double
-        var output = ""
-        var operator= ""
-        var calc: Calc
+    /**
+     * Inicializar las variables que se asignarán a cada componente que vamos a controlar.
+     */
+    private fun initComponents(){
+        txtPantalla = findViewById(R.id.txtPantalla)
+        txtDetalle = findViewById(R.id.txtDetalle)
 
-        /**
-         * Botones de números del 1 al 9 y incluyendo el 0:
-         */
-        val button1 = findViewById<Button>(id.buttonN1)
-        button1.setOnClickListener{
-            output+="1" // Se añade el valor indicado a la variable output
-            mainbox.text = output}// Se añade el valor a la visibilidad del TextView principal
-        val button2 = findViewById<Button>(id.buttonN2)
-        button2.setOnClickListener{
-            output+="2"
-            mainbox.text = output}
-        val button3 = findViewById<Button>(id.buttonN3)
-        button3.setOnClickListener {
-            output += "3"
-            mainbox.text = output}
-        val button4 = findViewById<Button>(id.buttonN4)
-        button4.setOnClickListener{
-            output+="4"
-            mainbox.text = output}
-        val button5 = findViewById<Button>(id.buttonN5)
-        button5.setOnClickListener{
-            output+="5"
-            mainbox.text = output}
-        val button6 = findViewById<Button>(id.buttonN6)
-        button6.setOnClickListener{
-            output+="6"
-            mainbox.text = output}
-        val button7 = findViewById<Button>(id.buttonN7)
-        button7.setOnClickListener{
-            output+="7"
-            mainbox.text = output}
-        val button8 = findViewById<Button>(id.buttonN8)
-        button8.setOnClickListener {
-            output += "8"
-            mainbox.text = output}
-        val button9 = findViewById<Button>(id.buttonN9)
-        button9.setOnClickListener{
-            output+="9"
-            mainbox.text = output}
-        val button0 = findViewById<Button>(id.buttonN0)
-        button0.setOnClickListener{
-            output+="0"
-            mainbox.text = output}
+        btnCE = findViewById(R.id.btnCE)
+        btnBorrar = findViewById(R.id.btnBorrar)
+        btnResult = findViewById(R.id.btnResult)
 
-        /**
-         * Botón punto:
-         *
-         * Simplemente añade un punto para operaciones con decimales
-         */
+        txtPantalla.text = ""
+        txtDetalle.text = ""
 
-        val buttonPoint = findViewById<Button>(id.buttonOpPoint)
-        buttonPoint.setOnClickListener{
-            output+="."
-            mainbox.text = output}
+        initBtnNum()
+        initBtnOper()
+    }
 
-        /**
-         * Botón de suma:
-         *
-         * Si el operator está vacio pondremos el simbolo "+" para pasar a la
-         * segunda parte de la operacion, si además de estar vacio, el valor
-         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
-         * del operator vacio, quiere decir que es una operación concatenada,
-         * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator.
-         *
-         * Luego, añadimos una condición para evitar errores, si el operator ya
-         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
-         * veces el mismo boton, no da errores, simplemente se queda como está.
-         *
-         * A continuación, añadimos una condición para evitar otro error, en
-         * este caso se trata de si el operator ya tiene un simbolo diferente
-         * al de este botón, al pulsar este boton se va a cambiar de simbolo
-         * al de este botón, así evitamos que si se pulsan dos botones de
-         * operación seguidos de un error.
-         *
-         * Al final vaciaremos el
-         * output para poder dejar paso a la segunda parte de la operación.
-         */
+    /**
+     * Establecer las variables del ArraList btnNum que controlarán los dígitos y el punto decimal.
+     */
+    private fun initBtnNum(){
+        btnNum = ArrayList()
+        btnNum.add(findViewById(R.id.btn0))
+        btnNum.add(findViewById(R.id.btn1))
+        btnNum.add(findViewById(R.id.btn2))
+        btnNum.add(findViewById(R.id.btn3))
+        btnNum.add(findViewById(R.id.btn4))
+        btnNum.add(findViewById(R.id.btn5))
+        btnNum.add(findViewById(R.id.btn6))
+        btnNum.add(findViewById(R.id.btn7))
+        btnNum.add(findViewById(R.id.btn8))
+        btnNum.add(findViewById(R.id.btn9))
+        btnNum.add(findViewById(R.id.btnDec))
+    }
 
-        val buttonsum = findViewById<Button>(id.buttonOpSum)
-        buttonsum.setOnClickListener {
-            mainbox.text = "+"
-            when {
-                operator.isEmpty() -> {
-                    operator = "+"
-                    if (n1 == 0.0) {n1 = output.toDouble()}
-                }
-                operator == "+" -> {operator = "+"}
-                operator.isNotEmpty() && operator != "+" -> {operator = "+"}
-                else -> {
-                    n1 = output.toDouble()
-                    operator = "+"
-                    detailbox.text = "$n1 $operator"
-                }
+    /**
+     * Establecer las variables del ArraList btnOper que controlarán los operadores del cálculo.
+     */
+    private fun initBtnOper(){
+        btnOper = ArrayList()
+        btnOper.add(findViewById(R.id.btnSuma))
+        btnOper.add(findViewById(R.id.btnResta))
+        btnOper.add(findViewById(R.id.btnMul))
+        btnOper.add(findViewById(R.id.btnDiv))
+    }
+
+    /**
+     * Establecer los eventos y las funciones asociadas de cada componente que vamos a controlar.
+     */
+    private fun initListeners(){
+        for (i in 0..<btnNum.count()){
+            btnNum[i].setOnClickListener{ btnNumClicked(i) }
+        }
+
+        for (i in 0..<btnOper.count()){
+            btnOper[i].setOnClickListener{ btnOperClicked(i) }
+        }
+
+        btnCE.setOnClickListener{ btnCEClicked() }
+        btnBorrar.setOnClickListener{ borrarDigito() }
+        btnResult.setOnClickListener{ btnResultClicked() }
+
+    }
+
+    /**
+     * Borra los últimos dígitos del número actual en función del estado de la calculadora.
+     */
+    private fun borrarDigito() {
+        if (calc.primerNum) { // Si es true, nos centramos en el numTemp1
+            // Si la string no está vacía, podremos quitarle caracteres
+            if (calc.numTemp1.isNotEmpty()) {
+                // Aquí borrará el último dígito de numTemp1, con una
+                // substring que excluirá el último caracter
+                calc.numTemp1 = calc.numTemp1.substring( 0, calc.numTemp1.length - 1)
+            } else { // Si la string está vacia, significa que ya no hay nada que borrar
+                mensajeError("No hay dígitos para borrar")
             }
-            output = ""
-        }
-
-        /**
-         * Botón de resta:
-         *
-         * Si el operator está vacio pondremos el simbolo "-" para pasar a la
-         * segunda parte de la operacion, si además de estar vacio, el valor
-         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
-         * del operator vacio, quiere decir que es una operación concatenada,
-         * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator.
-         *
-         * Luego, añadimos una condición para evitar errores, si el operator ya
-         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
-         * veces el mismo boton, no da errores, simplemente se queda como está.
-         *
-         * A continuación, añadimos una condición para evitar otro error, en
-         * este caso se trata de si el operator ya tiene un simbolo diferente
-         * al de este botón, al pulsar este boton se va a cambiar de simbolo
-         * al de este botón, así evitamos que si se pulsan dos botones de
-         * operación seguidos de un error.
-         *
-         * Al final vaciaremos el
-         * output para poder dejar paso a la segunda parte de la operación.
-         */
-
-        val buttonrest = findViewById<Button>(id.buttonOpRest)
-        buttonrest.setOnClickListener {
-            mainbox.text = "-"
-            when {
-                operator.isEmpty() -> {
-                    operator = "-"
-                    if (n1 == 0.0) {n1 = output.toDouble()}
-                }
-                operator == "-" -> {operator = "-"}
-                operator.isNotEmpty() && operator != "-" -> {operator = "-"}
-                else -> {
-                    n1 = output.toDouble()
-                    operator = "-"
-                }
-            }
-            output = ""
-        }
-
-        /**
-         * Botón de mutiplicación:
-         *
-         * Si el operator está vacio pondremos el simbolo "*" para pasar a la
-         * segunda parte de la operacion, si además de estar vacio, el valor
-         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
-         * del operator vacio, quiere decir que es una operación concatenada,
-         * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator.
-         *
-         * Luego, añadimos una condición para evitar errores, si el operator ya
-         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
-         * veces el mismo boton, no da errores, simplemente se queda como está.
-         *
-         * A continuación, añadimos una condición para evitar otro error, en
-         * este caso se trata de si el operator ya tiene un simbolo diferente
-         * al de este botón, al pulsar este boton se va a cambiar de simbolo
-         * al de este botón, así evitamos que si se pulsan dos botones de
-         * operación seguidos de un error.
-         *
-         * Al final vaciaremos el
-         * output para poder dejar paso a la segunda parte de la operación.
-         */
-
-        val buttonmult = findViewById<Button>(id.buttonOpMult)
-
-        buttonmult.setOnClickListener {
-            mainbox.text = "*"
-            when {
-                operator.isEmpty() -> {
-                    operator = "*"
-                    if (n1 == 0.0) {n1 = output.toDouble()}
-                }
-                operator == "*" -> {operator = "*"}
-                operator.isNotEmpty() && operator != "*" -> {operator = "*"}
-                else -> {
-                    n1 = output.toDouble()
-                    operator = "*"
-                }
-            }
-            output = ""
-        }
-
-        /**
-         * Botón división:
-         *
-         * Si el operator está vacio pondremos el simbolo "/" para pasar a la
-         * segunda parte de la operacion, si además de estar vacio, el valor
-         * de n1 es 0, lo añadiremos al output. En caso de no estar el valor
-         * del operator vacio, quiere decir que es una operación concatenada,
-         * en la que n1 ya tendrá el valor de la anterior operación, solamente
-         * cambiaremos de simbolo a la variable operator.
-         *
-         * Luego, añadimos una condición para evitar errores, si el operator ya
-         * es el mismo que ya estaba, no se altera, por lo que al pulsar varias
-         * veces el mismo boton, no da errores, simplemente se queda como está.
-         *
-         * A continuación, añadimos una condición para evitar otro error, en
-         * este caso se trata de si el operator ya tiene un simbolo diferente
-         * al de este botón, al pulsar este boton se va a cambiar de simbolo
-         * al de este botón, así evitamos que si se pulsan dos botones de
-         * operación seguidos de un error.
-         *
-         * Al final vaciaremos el
-         * output para poder dejar paso a la segunda parte de la operación.
-         */
-
-        val buttondiv = findViewById<Button>(id.buttonOpDiv)
-        buttondiv.setOnClickListener{
-            mainbox.text = "/"
-            when {
-                operator.isEmpty() -> {
-                    operator = "/"
-                    if (n1 == 0.0) {n1 = output.toDouble()}
-                }
-                operator == "/" -> {operator = "/"}
-                operator.isNotEmpty() && operator != "/" -> {operator = "/"}
-                else -> {
-                    n1 = output.toDouble()
-                    operator = "/"
-                }
-            }
-            output = ""
-        }
-
-        /**
-         *
-         * A continuación, tenemos el botón C, donde podremos
-         * borrar lo que tengamos escrito hasta ahora.
-         * Simplemente devolvemos los valores a como estaban
-         * al principio del programa y lo mostraremos por pantalla,
-         * el resultado es que quedará vacio.
-         *
-         */
-
-        val buttonC = findViewById<Button>(id.buttonC)
-        buttonC.setBackgroundColor(Color.parseColor("#FF0000"))
-        buttonC.setOnClickListener{
-            output = ""
-            n1 = 0.0
-            n2 = 0.0
-            operator=""
-            mainbox.text = output
-            detailbox.text = output
-        }
-
-        /**
-         *
-         * Botón Equal:
-         *
-         * Este botón nos servirá para obtener el resultado de la operación,
-         * al pulsar, se creará el objeto cálculo con los valores de las
-         * variables n1, n2 y operator y procederemos a llamar al método
-         * operation de la clase Calc.
-         * Para más información sobre la clase Calc, @see Calc
-         *
-         */
-
-        val buttoneq = findViewById<Button>(id.buttonOpEq)
-        // Para cambiar el color a verde
-        buttoneq.setBackgroundColor(Color.parseColor("#00FF00"))
-        buttoneq.setOnClickListener{
-            n2 = output.toDouble()
-            mainbox.text = output
-            calc = Calc(n1, n2)
-            output = calc.operation(operator).toString()
-            // Mostramos el resultado en la interfaz de usuario
-            mainbox.text = output
-            detailbox.text = "$n1 $operator $n2 = $output"
-            // Reiniciamos las variables
-            n1 = output.toDouble()
-            n2 = 0.0
-            output = ""
-            operator = ""
-        }
-
-
-        /**
-         * Botón CE:
-         *
-         * Con este botón podremos ir borrando uno a uno los caracteres que
-         * añadamos a la calculadora, permitiendo rectificar en la operación
-         * en caso de que nos equivoquemos
-         *
-         * Comenzaremos verificando si la variable "output" (donde se muestra
-         * el número actual en la pantalla) no está vacía, en caso de que no lo
-         * esté, significará que podemos empezar a borrar caracteres de la cadena
-         * uno a uno.
-         *
-         * Para conseguir que solo se borre de uno en uno y no toda la cadena entera,
-         * podemos usar un "substring", con el que podremos tomar una subcadena que
-         * excluya el último carácter (output.length - 1).
-         *
-         */
-
-        val buttonCE = findViewById<Button>(id.buttonOpCE)
-        // Para cambiar el color a amarillo
-        buttonCE.setBackgroundColor(Color.parseColor("#FFA500"))
-        buttonCE.setOnClickListener {
-            if (output.isNotEmpty()) {
-                output = output.substring(0, output.length - 1)
-                mainbox.text = output
+        } else { // Si el false, nos centramos en el numTemp2
+            // Si la string no está vacía, podremos quitarle caracteres
+            if (calc.numTemp2.isNotEmpty()) {
+                // Aquí borrará el último dígito de numTemp2, con una
+                // substring que excluirá el último caracter
+                calc.numTemp2 = calc.numTemp2.substring( 0, calc.numTemp2.length - 1)
+            } else { // Si la string está vacia, significa que ya no hay nada que borrar
+                mensajeError("No hay dígitos para borrar")
             }
         }
+
+        if (calc.primerNum) {
+            muestraValor(calc.numTemp1, calc.numTemp1 + calc.operadorTxt() + calc.numTemp2)
+        } else {
+            muestraValor(calc.numTemp2, calc.numTemp1 + calc.operadorTxt() + calc.numTemp2)
+        }
+    }
+
+    /**
+     * Agrega el dígito pulsado en el número correspondiente del objeto calc.
+     *
+     * @param num dígito pulsado del 0 al 9 o punto decimal (10)
+     */
+    private fun btnNumClicked(num : Int){
+        calc.tecleaDigito(num)
+
+        //Mostramos info actualizada en los TextView de la app
+        if (calc.primerNum) {
+            muestraValor(calc.numTemp1, calc.numTemp1)
+        }
+        else {
+            muestraValor(calc.numTemp2, calc.numTemp1 + calc.operadorTxt() + calc.numTemp2)
+        }
+    }
+
+    /**
+     * Agrega la operación del cálculo a realizar
+     *
+     * @param num operación (0 -> + / 1 -> - / 2 -> * / 3 -> /
+     */
+    private fun btnOperClicked(num : Int){
+        if (calc.primerNum) {
+            //Tratamiento de la operación cuando estamos introduciendo el primer número.
+
+            if (calc.numCalculos > 0 && calc.numTemp1 == "") {
+                //Si hay un cálculo anterior y el num1 aún está vacío, el resultado anterior es el num1 del siguiente cálculo.
+                calc.num1 = calc.result
+                calc.numTemp1 = df.format(calc.result).toString()
+            }
+            else {
+                //Sino, asignamos num1 del objeto calc convirtiendo los dígitos introducidos a float.
+                //Además, si existe algún problema o cuando si se pulsa un operador sin introducir número antes, lo capturamos y usamos el valor 0.
+                try {
+                    calc.num1 = calc.numTemp1.toFloat()
+                } catch (e: NumberFormatException) {
+                    calc.num1 = 0f
+                    calc.numTemp1 = "0"
+                }
+            }
+
+            //Asignamos el operador al objeto calc, mostramos info en pantalla y actualizamos las características necesarias de calc para indicar que pasamos al estado de introducir el segundo número.
+            calc.op = num
+            muestraValor(calc.operadorTxt(), calc.numTemp1 + calc.operadorTxt())
+            calc.numTemp2 = ""
+            calc.primerNum = false
+        }
+        else if (calc.numTemp2 == "") {
+            //Si se introduce una operación y aún no existe el segundo número la nueva operación debe reemplazar la operación anterior.
+
+            calc.op = num
+            //Mostramos en pantalla la actualización del operador.
+            muestraValor(calc.operadorTxt(), calc.numTemp1 + calc.operadorTxt())
+        }
+        else {
+            //Tratamiento de la operación cuando estamos introduciendo el segundo número.
+
+            //Convertimos la cadena de dígitos en el número 2 y realizamos el cálculo.
+            //Si existe algún problema en la conversión la controlamos asignando el valor 0.
+            calc.num2 = try { calc.numTemp2.toFloat() } catch (e: NumberFormatException) { 0f }
+            calc.calcular()
+
+            //Mostramos en pantalla el resultado del cálculo como detalle y la operación en la pantalla principal.
+            muestraValor(calc.operadorTxt(num), df.format(calc.result).toString() + calc.operadorTxt(num))
+
+            //Actualizamos las características necesarias del objeto calc, ya que vamos a seguir en el estado de introducir solo un segundo número, ya que el primer número y la operación es asignado como el resultado del cálculo realizado y la nueva operación introducida.
+            calc.num1 = calc.result
+            calc.op = num
+            calc.num2 = 0f
+            calc.numTemp1 = df.format(calc.num1).toString()
+            calc.numTemp2 = ""
+        }
+    }
+
+    /**
+     * Reiniciar las características del objeto calc cuando se pulsa el botón CE
+     */
+    private fun btnCEClicked() {
+        //Mostramos en pantalla y detalle la cadena de caracteres vacía.
+        muestraValor("", "")
+
+        //Inicializamos las características del objeto calc.
+        calc.iniValores()
+    }
+
+
+    /**
+     * Acciones a realizar al pulsar el botón =.
+     * Solo se ejecutará si estamos introduciendo el segundo número.
+     * Realizará las acciones necesarias para mostrar el cálculo en pantalla.
+     */
+    private fun btnResultClicked(){
+        if (!calc.primerNum && calc.numTemp2 != ""){
+            //Si estamos introduciendo el segundo número, lo actualizamos convirtiendo la cadena de dígitos y calculamos la operación.
+            calc.num2 = try { calc.numTemp2.toFloat() } catch (e: NumberFormatException) { 0f }
+            calc.calcular()
+
+            //Mostramos en pantalla el resultado y en detalle toda la operación (num1 + num2 = result) formateando a 2 posiciones decimales.
+            muestraValor(df.format(calc.result).toString(), df.format(calc.num1).toString() + calc.operadorTxt() + df.format(calc.num2).toString() + "=" + df.format(calc.result).toString())
+
+            //Inicializamos las características del objeto calc, excepto el núemro de cálculos.
+            calc.iniValores(resetNumCalculos = false, resetResult = false)
+        }
+        else {
+            mensajeError("Debe introducir 2 números y una operación para mostrar un resultado")
+        }
+    }
+
+    /**
+     * Muestra la información en los componentest TextView txtPantalla y txtDetalle.
+     *
+     * @param pantalla info a mostrar en txtPantalla
+     * @param detalle info a mostrar en txtDetalle
+     */
+    private fun muestraValor(pantalla : String, detalle : String){
+        txtPantalla.text = getString(R.string.txt_txtPantalla, pantalla)
+        txtDetalle.text = getString(R.string.txt_txtDetalle, detalle)
+    }
+
+    /**
+     * Muestra un mensaje de error en pantalla durante un tiempo corto.
+     *
+     * @msj mensaje de error
+     */
+    private fun mensajeError(msj: String) {
+        Toast.makeText(this, msj, Toast.LENGTH_SHORT).show()
     }
 }

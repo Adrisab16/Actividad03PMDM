@@ -1,10 +1,12 @@
 package com.pmdm.actividad02pmdm
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.pmdm.actividad02pmdm.R.*
 
 /**
@@ -138,6 +140,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     n1 = output.toDouble()
                     operator = "+"
+                    detailbox.text = "$n1 $operator"
                 }
             }
             output = ""
@@ -276,6 +279,7 @@ class MainActivity : AppCompatActivity() {
          *
          */
         val buttonC = findViewById<Button>(id.buttonC)
+        buttonC.setBackgroundColor(Color.parseColor("#FF0000"))
         buttonC.setOnClickListener{
             output = ""
             n1 = 0.0
@@ -293,16 +297,25 @@ class MainActivity : AppCompatActivity() {
          * Para más información sobre la clase Calc, @see Calc
          */
         val buttoneq = findViewById<Button>(id.buttonOpEq)
+        // Para cambiar el color a verde
+        buttoneq.setBackgroundColor(Color.parseColor("#00FF00"))
         buttoneq.setOnClickListener{
-            n2=output.toDouble()
-            mainbox.text = output
-            calc = Calc(n1, n2)
-            output = calc.operation(operator).toString()
-            mainbox.text = output
-            n1 = output.toDouble()
-            n2 = 0.0
-            output=""
-            operator = ""
+
+            n2 = output.toDouble()
+            if (n1 != 0.0 && n2 != 0.0 && operator.isNotEmpty()) {
+                mainbox.text = output
+                calc = Calc(n1, n2)
+                output = calc.operation(operator).toString()
+                mainbox.text = output
+                detailbox.text = "$n1 $operator $n2 = $output"
+                n1 = output.toDouble()
+                n2 = 0.0
+                output = ""
+                operator = ""
+            } else {
+                // Mostrar un mensaje Toast indicando que se necesitan 2 números y una operación
+                Toast.makeText(this, "Debe ingresar 2 números y una operación para calcular un resultado", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

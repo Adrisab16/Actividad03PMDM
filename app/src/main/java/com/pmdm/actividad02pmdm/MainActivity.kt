@@ -124,9 +124,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (calc.primerNum) {
+        if (calc.primerNum) { // Si es el primer número, refrescará el primer número
             muestraValor(calc.numTemp1, calc.numTemp1 + calc.operadorTxt() + calc.numTemp2)
-        } else {
+        } else { // Si es el segundo número, refrescará el segundo número
             muestraValor(calc.numTemp2, calc.numTemp1 + calc.operadorTxt() + calc.numTemp2)
         }
     }

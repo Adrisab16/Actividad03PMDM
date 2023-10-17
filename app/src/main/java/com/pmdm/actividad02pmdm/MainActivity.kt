@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         var n1 = 0.0
         var n2: Double
-        var n2Bool = false
         var output = ""
         var operator= ""
         var calc: Calc
@@ -301,7 +300,6 @@ class MainActivity : AppCompatActivity() {
         // Para cambiar el color a verde
         buttoneq.setBackgroundColor(Color.parseColor("#00FF00"))
         buttoneq.setOnClickListener{
-            n2Bool = true
             n2 = output.toDouble()
             if (n1 != 0.0 && n2 != 0.0 && operator.isNotEmpty()) {
                 mainbox.text = output

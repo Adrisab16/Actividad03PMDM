@@ -119,8 +119,18 @@ class MainActivity : AppCompatActivity() {
                 // Aquí borrará el último dígito de numTemp2, con una
                 // substring que excluirá el último caracter
                 calc.numTemp2 = calc.numTemp2.substring( 0, calc.numTemp2.length - 1)
-            } else { // Si la string está vacia, significa que ya no hay nada que borrar
-                mensajeError("No hay dígitos para borrar")
+            } else {
+                // Si la string está vacia, empezaremos a borrar el simbolo de
+                // operación y luego el primer número hasta que nos quedemos sin
+                // dígitos, donde aparecerá el mensaje de error de la parte anterior
+                // del código
+
+                // Hacemos que sea un simbolo de operador vacío, valiendonos de la
+                // lógica de la fun calcular y de la fun operadorTxt.
+                calc.op = 4
+                calc.primerNum = true // Una vez el simbolo esté borrado, pasaremos
+                // al primer número, por lo que se aplicará el código
+                // anterior (el primer if de esta funcion)
             }
         }
 

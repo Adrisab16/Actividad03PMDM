@@ -148,7 +148,6 @@ class MainActivity : AppCompatActivity() {
      */
     private fun btnNumClicked(num : Int){
         calc.tecleaDigito(num)
-
         //Mostramos info actualizada en los TextView de la app
         if (calc.primerNum) {
             muestraValor(calc.numTemp1, calc.numTemp1)
